@@ -54,29 +54,44 @@ function IncidentReportForm() {
     e.preventDefault();
     try {
       const uploadedFiles = [];
+  
+      // Loop through each file in mediaFiles and upload it to Supabase
       for (const file of formData.mediaFiles) {
         const { data, error } = await supabase.storage
           .from("incidentImages")
           .upload(`incidents/${Date.now()}_${file.name}`, file);
+  
         if (error) {
           console.error("Image upload error:", error);
           alert(`Error uploading file ${file.name}: ${error.message}`);
         } else {
-          const publicUrl = supabase.storage
-            .from("incidentImages")
-            .getPublicUrl(data.path);
-          uploadedFiles.push(publicUrl.publicUrl);
+          // Manually construct the public URL using the storage bucket and path
+          const publicUrl = `https://rtwmflquinnbaeqbfkpz.supabase.co/storage/v1/object/public/incidentImages/${data.path}`;
+          
+          console.log("Public URL for file:", publicUrl);  // Log the constructed public URL
+          uploadedFiles.push(publicUrl);  // Add the public URL to the array
         }
       }
-      const { data, error } = await supabase.from("incidentDetails").insert([
-        {
-          ...formData,
-          mediaFiles: uploadedFiles,
+  
+      // Log the array of uploaded files
+      console.log("Uploaded Files Array:", uploadedFiles);
+  
+      // Insert the incident details, including media files
+      const { data, error } = await supabase
+        .from("incidentDetails")
+        .insert([{
+          type: formData.type,
+          location: formData.location,
+          time: formData.time,
+          summary: formData.summary,
+          mediaFiles: uploadedFiles,  // Save the array of URLs
+          latitude: formData.latitude,
+          longitude: formData.longitude,
           created_at: new Date(),
-        },
-      ]);
-
+        }]);
+  
       if (error) throw new Error(error.message);
+  
       if (data && data.length > 0) {
         dispatch(addIncident(data[0]));
         navigate("/notifications");
@@ -86,6 +101,7 @@ function IncidentReportForm() {
       alert(`Failed to submit the incident. Error: ${error.message}`);
     }
   };
+  
 
   return (
     <>
