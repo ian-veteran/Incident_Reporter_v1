@@ -88,79 +88,91 @@ function IncidentReportForm() {
   };
 
   return (
-    <div className="max-w-5xl mx-auto p-4 rounded-lg shadow-lg">
-      <form onSubmit={handleSubmit} className="grid grid-cols-1 gap-6 lg:grid-cols-3">
-        {/* Select type of incident */}
-        <select
-          name="type"
-          className="w-full p-3 border border-gray-300 rounded-lg"
-          value={formData.type}
-          onChange={handleInputChange}
-        >
-          <option value="">Select type of incident</option>
-          <option value="Fire">Fire</option>
-          <option value="Flood">Flood</option>
-          <option value="Earthquake">Earthquake</option>
-          <option value="Robbery">Robbery</option>
-          <option value="Accident">Accident</option>
-        </select>
+    <>
+      {/* Header */}
+      <header className="text-center p-4">
+        <h1 className="text-3xl font-bold text-blue-600">RipotiChapChap</h1>
+      </header>
 
-        <input
-          type="text"
-          name="location"
-          className="w-full p-3 border border-gray-300 rounded-lg"
-          placeholder="Location of the incident"
-          value={formData.location}
-          onChange={handleInputChange}
-        />
+      {/* Main Form Container */}
+      <div className="max-w-5xl mx-auto p-4 rounded-lg shadow-lg">
+        <form onSubmit={handleSubmit} className="grid grid-cols-1 gap-6 lg:grid-cols-3">
+          <select
+            name="type"
+            className="w-full p-3 border border-gray-300 rounded-lg"
+            value={formData.type}
+            onChange={handleInputChange}
+          >
+            <option value="">Select type of incident</option>
+            <option value="Fire">Fire</option>
+            <option value="Flood">Flood</option>
+            <option value="Earthquake">Earthquake</option>
+            <option value="Robbery">Robbery</option>
+            <option value="Accident">Accident</option>
+          </select>
 
-        <input
-          type="time"
-          name="time"
-          className="w-full p-3 border border-gray-300 rounded-lg"
-          value={formData.time}
-          onChange={handleInputChange}
-        />
+          <input
+            type="text"
+            name="location"
+            className="w-full p-3 border border-gray-300 rounded-lg"
+            placeholder="Location of the incident"
+            value={formData.location}
+            onChange={handleInputChange}
+          />
 
-        <textarea
-          name="summary"
-          placeholder="Summary of the incident"
-          className="w-full p-3 border border-gray-300 rounded-lg lg:col-span-3"
-          rows="4"
-          value={formData.summary}
-          onChange={handleInputChange}
-        />
+          <input
+            type="time"
+            name="time"
+            className="w-full p-3 border border-gray-300 rounded-lg"
+            value={formData.time}
+            onChange={handleInputChange}
+          />
 
-        <input
-          type="file"
-          accept="image/*,video/*"
-          multiple
-          onChange={handleMediaChange}
-          className="w-full p-3 bg-gray-100 border border-gray-300 rounded-lg"
-        />
+          <textarea
+            name="summary"
+            placeholder="Summary of the incident"
+            className="w-full p-3 border border-gray-300 rounded-lg lg:col-span-3"
+            rows="4"
+            value={formData.summary}
+            onChange={handleInputChange}
+          />
 
-        <button
-          type="button"
-          onClick={handleGeolocation}
-          className="w-full p-3 bg-green-500 text-white rounded-lg lg:col-span-3"
-        >
-          Capture Geolocation
-        </button>
+          <input
+            type="file"
+            accept="image/*,video/*"
+            multiple
+            onChange={handleMediaChange}
+            className="w-full p-3 bg-gray-100 border border-gray-300 rounded-lg"
+          />
 
-        {formData.latitude && formData.longitude && (
-          <p className="lg:col-span-3">
-            <strong>Geolocation:</strong> Latitude {formData.latitude}, Longitude {formData.longitude}
-          </p>
-        )}
+          <button
+            type="button"
+            onClick={handleGeolocation}
+            className="w-full p-3 bg-green-500 text-white rounded-lg lg:col-span-3"
+          >
+            Capture Geolocation
+          </button>
 
-        <button
-          type="submit"
-          className="w-full p-3 bg-blue-500 text-white rounded-lg lg:col-span-3"
-        >
-          Submit Report
-        </button>
-      </form>
-    </div>
+          {formData.latitude && formData.longitude && (
+            <p className="lg:col-span-3">
+              <strong>Geolocation:</strong> Latitude {formData.latitude}, Longitude {formData.longitude}
+            </p>
+          )}
+
+          <button
+            type="submit"
+            className="w-full p-3 bg-blue-500 text-white rounded-lg lg:col-span-3"
+          >
+            Submit Report
+          </button>
+        </form>
+      </div>
+
+      {/* Footer */}
+      <footer className="text-center mt-8 p-4 text-gray-500">
+        © {new Date().getFullYear()} RipotiChapChap. All rights reserved.
+      </footer>
+    </>
   );
 }
 
