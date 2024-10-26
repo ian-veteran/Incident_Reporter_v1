@@ -1,9 +1,11 @@
-import { configureStore } from '@reduxjs/toolkit';
-import incidentReducer from './features/report/incidentSlice';
+import { configureStore } from "@reduxjs/toolkit";
+import incidentReducer from "./features/report/incidentSlice";
+import incidentSlice from "./slice/incidentSlice";
 
 const store = configureStore({
   reducer: {
-    incident: incidentReducer,
+    incidents: incidentReducer,
+    incident: incidentSlice,
   },
 });
 
