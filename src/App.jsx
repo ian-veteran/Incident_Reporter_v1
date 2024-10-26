@@ -15,17 +15,17 @@ const router = createBrowserRouter([
   },
 
   {
-    path:"/incident_form",
+    path: "/incident_form",
     element: <IncidentReportForm />,
   },
 
   {
     path: "/dashboard",
     element: <Dashboard />,
-    children:[
+    children: [
       {
-        path:"home",
-        element:<DashboardCards />
+        path: "home",
+        element: <DashboardCards />,
       },
       {
         path: "notifications",
@@ -35,7 +35,7 @@ const router = createBrowserRouter([
         path: "incident/:id",
         element: <IncidentDetails />,
       },
-    ]
+    ],
   },
 ]);
 

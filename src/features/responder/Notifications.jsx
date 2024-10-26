@@ -19,8 +19,8 @@ function Notifications() {
     }
   };
 
-  const handleNotificationClick = () => {
-    fetchIncidents();
+  const handleNotificationClick = async () => {
+    await fetchIncidents(); // Awaiting the fetch
   };
 
   return (
@@ -29,7 +29,7 @@ function Notifications() {
         onClick={handleNotificationClick}
         className="mb-4 bg-blue-500 text-white px-4 py-2 rounded-lg"
       >
-        Fetch Incidents
+        Show Incidents
       </button>
       {incidents.length === 0 ? (
         <p className="text-center text-gray-600">No incidents reported yet.</p>
