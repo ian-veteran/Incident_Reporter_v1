@@ -15,5 +15,7 @@ const incidentSlice = createSlice({
   },
 });
 
+export const selectIncidentCount = (state) => state.incident.incidents.length;
+
 export const { addIncident, setIncidents } = incidentSlice.actions;
 export default incidentSlice.reducer;

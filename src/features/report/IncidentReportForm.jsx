@@ -4,6 +4,10 @@ import { useNavigate } from "react-router-dom";
 import { addIncident } from "./incidentSlice";
 import supabase from "../../service/supabase";
 
+const counties = [
+  
+]
+
 function IncidentReportForm() {
   const [formData, setFormData] = useState({
     type: "",
