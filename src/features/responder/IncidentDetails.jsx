@@ -1,4 +1,3 @@
-import React from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
@@ -7,8 +6,10 @@ import "leaflet/dist/leaflet.css";
 function IncidentDetails() {
   const { id } = useParams();
   const incidents = useSelector((state) => state.incident.incidents);
+
+  // Ensure correct ID handling
   const incident = incidents.find(
-    (incident) => incident.id === parseInt(id, 10)
+    (incident) => incident.id === id // Adjust based on ID type
   );
 
   const navigate = useNavigate();
@@ -17,7 +18,6 @@ function IncidentDetails() {
     return <p className="text-center text-red-500">Incident not found</p>;
   }
 
-  // Ensure mediaFiles is an array of URLs
   const mediaFiles = Array.isArray(incident.mediaFiles)
     ? incident.mediaFiles
     : [];
@@ -67,7 +67,6 @@ function IncidentDetails() {
           <strong>Summary:</strong> {incident.summary}
         </p>
 
-        {/* Display attached images */}
         {mediaFiles.length > 0 && (
           <div className="mt-4">
             <p>
@@ -77,7 +76,7 @@ function IncidentDetails() {
               {mediaFiles.map((fileUrl, index) => (
                 <img
                   key={index}
-                  src={fileUrl} // Use the public URL to display the image
+                  src={fileUrl}
                   alt={`Incident Media ${index + 1}`}
                   className="w-full h-auto rounded-lg"
                 />
@@ -86,7 +85,6 @@ function IncidentDetails() {
           </div>
         )}
 
-        {/* Map Display */}
         {incident.latitude && incident.longitude && (
           <div className="mt-6">
             <h3 className="text-lg font-bold mb-4">Incident Location on Map</h3>

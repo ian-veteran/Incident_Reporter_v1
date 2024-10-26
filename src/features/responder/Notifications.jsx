@@ -1,33 +1,36 @@
-import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import supabase from '../../service/supabase'
-import { setIncidents } from "../report/incidentSlice";
+import supabase from "../../service/supabase";
+import { setIncidents, selectIncidents } from "../report/incidentSlice";
 
 function Notifications() {
   const dispatch = useDispatch();
-  const incidents = useSelector((state) => state.incident.incidents); // Select all incidents
- 
+  const incidents = useSelector(selectIncidents);
 
-  useEffect(() => {
-    const fetchIncidents = async () => {
+  const fetchIncidents = async () => {
+    try {
       const { data, error } = await supabase
-        .from('incidentDetails') // Replace with your table name in Supabase
-        .select('*'); // Fetch all columns or specify the ones you need
+        .from("incidentDetails")
+        .select("*");
+      if (error) throw error;
+      dispatch(setIncidents(data));
+    } catch (error) {
+      console.error("Error fetching incidents:", error.message);
+    }
+  };
 
-      if (error) {
-        console.error('Error fetching incidents:', error);
-      } else {
-        // Dispatch the fetched incidents to Redux
-        dispatch(setIncidents(data));
-      }
-    };
+  const handleNotificationClick = async () => {
+    await fetchIncidents(); // Awaiting the fetch
+  };
 
-    fetchIncidents(); // Call the fetch function
-  }, [dispatch]);
   return (
     <div className="max-w-6xl mx-auto p-6 bg-gray-100 rounded-lg shadow-lg">
-      
+      <button
+        onClick={handleNotificationClick}
+        className="mb-4 bg-blue-500 text-white px-4 py-2 rounded-lg"
+      >
+        Show Incidents
+      </button>
       {incidents.length === 0 ? (
         <p className="text-center text-gray-600">No incidents reported yet.</p>
       ) : (

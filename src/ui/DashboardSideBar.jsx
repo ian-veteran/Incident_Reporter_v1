@@ -3,18 +3,18 @@ import { Link } from "react-router-dom";
 function DashboardSideBar() {
   return (
     <>
-      <aside className="w-64 bg-blue-500 p-6">
-        <div className="text-2xl font-bold mb-8">RipotiChapChap</div>
+      <aside className="w-64 bg-blue-400 p-6 ">
+        <div className="text-2xl font-bold mb-8">
+          <span className="text-red-600">RipotiChap </span> Chap
+        </div>
         <nav className="space-y-4">
-          <Link className="block text-white font-semibold" to="/dashboard/home">
+          <Link className="block text-black font-semibold" to="/dashboard/home">
             Home
           </Link>
-          <Link className="block text-white" to="/dashboard/notifications">
+          <Link className="block text-black" to="/dashboard/notifications">
             Notifications
           </Link>
-          <Link className="block text-white">
-            Statistics
-          </Link>
+          <Link className="block text-black">Statistics</Link>
         </nav>
       </aside>
     </>
