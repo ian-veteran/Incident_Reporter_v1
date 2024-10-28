@@ -14,8 +14,9 @@ function Notifications() {
       const { data, error } = await supabase
         .from("incidentDetails") // Replace with your table name in Supabase
         .select("*") // Fetch all columns or specify the ones you need
-        .order("created_at", { ascending: false });
-
+        .order("created_at", { ascending: false }) // First order by date
+        .order("time", { ascending: false }); // Then order by time
+  
       if (error) {
         console.error("Error fetching incidents:", error);
       } else {
@@ -23,9 +24,9 @@ function Notifications() {
         dispatch(setIncidents(data));
       }
     };
-
+  
     fetchIncidents(); // Call the fetch function
-  }, [dispatch]);
+  }, [dispatch]);  
   return (
     <>
     <p className="p-3 text-base ">Total incidents: {incidentCount}</p>
