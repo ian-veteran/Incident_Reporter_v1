@@ -13,7 +13,8 @@ function Notifications() {
     const fetchIncidents = async () => {
       const { data, error } = await supabase
         .from("incidentDetails") // Replace with your table name in Supabase
-        .select("*"); // Fetch all columns or specify the ones you need
+        .select("*") // Fetch all columns or specify the ones you need
+        .order("created_at", { ascending: false });
 
       if (error) {
         console.error("Error fetching incidents:", error);
@@ -36,7 +37,7 @@ function Notifications() {
         ) : (
           <table className="min-w-full bg-white rounded-lg shadow-md">
             <thead>
-              <tr className="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
+              <tr className="bg-gray-200 text-gray-600 uppercase text-sm leading-normal sticky top-0">
                 <th className="py-3 px-6 text-left">Date</th>
                 <th className="py-3 px-6 text-left">Type</th>
                 <th className="py-3 px-6 text-left">Time</th>

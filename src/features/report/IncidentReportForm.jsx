@@ -1,12 +1,57 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
 import { addIncident } from "./incidentSlice";
 import supabase from "../../service/supabase";
 
-const counties = [
-  
-]
+export const counties = {
+  1: "Mombasa",
+  2: "Kwale",
+  3: "Kilifi",
+  4: "Tana River",
+  5: "Lamu",
+  6: "Taita/Taveta",
+  7: "Garissa",
+  8: "Wajir",
+  9: "Mandera",
+  10: "Marsabit",
+  11: "Isiolo",
+  12: "Meru",
+  13: "Tharaka-Nithi",
+  14: "Embu",
+  15: "Kitui",
+  16: "Machakos",
+  17: "Makueni",
+  18: "Nyandarua",
+  19: "Nyeri",
+  20: "Kirinyaga",
+  21: "Murang'a",
+  22: "Kiambu",
+  23: "Turkana",
+  24: "West Pokot",
+  25: "Samburu",
+  26: "Trans Nzoia",
+  27: "Uasin Gishu",
+  28: "Elgeyo/Marakwet",
+  29: "Nandi",
+  30: "Baringo",
+  31: "Laikipia",
+  32: "Nakuru",
+  33: "Narok",
+  34: "Kajiado",
+  35: "Kericho",
+  36: "Bomet",
+  37: "Kakamega",
+  38: "Vihiga",
+  39: "Bungoma",
+  40: "Busia",
+  41: "Siaya",
+  42: "Kisumu",
+  43: "Homa Bay",
+  44: "Migori",
+  45: "Kisii",
+  46: "Nyamira",
+  47: "Nairobi City",
+};
 
 function IncidentReportForm() {
   const [formData, setFormData] = useState({
@@ -17,9 +62,12 @@ function IncidentReportForm() {
     mediaFiles: [],
     latitude: "",
     longitude: "",
+    contactPerson: "",
+    county: "",
   });
+  const [successMessage, setSuccessMessage] = useState("");
   const dispatch = useDispatch();
-  const navigate = useNavigate();
+  const fileInputRef = useRef(null); // Add reference for file inp
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -58,65 +106,84 @@ function IncidentReportForm() {
     e.preventDefault();
     try {
       const uploadedFiles = [];
-  
-      // Loop through each file in mediaFiles and upload it to Supabase
       for (const file of formData.mediaFiles) {
         const { data, error } = await supabase.storage
           .from("incidentImages")
           .upload(`incidents/${Date.now()}_${file.name}`, file);
-  
+
         if (error) {
           console.error("Image upload error:", error);
           alert(`Error uploading file ${file.name}: ${error.message}`);
         } else {
-          // Manually construct the public URL using the storage bucket and path
           const publicUrl = `https://rtwmflquinnbaeqbfkpz.supabase.co/storage/v1/object/public/incidentImages/${data.path}`;
-          
-          console.log("Public URL for file:", publicUrl);  // Log the constructed public URL
-          uploadedFiles.push(publicUrl);  // Add the public URL to the array
+          uploadedFiles.push(publicUrl);
         }
       }
-  
-      // Log the array of uploaded files
-      console.log("Uploaded Files Array:", uploadedFiles);
-  
-      // Insert the incident details, including media files
-      const { data, error } = await supabase
-        .from("incidentDetails")
-        .insert([{
+
+      const { data, error } = await supabase.from("incidentDetails").insert([
+        {
           type: formData.type,
           location: formData.location,
           time: formData.time,
           summary: formData.summary,
-          mediaFiles: uploadedFiles,  // Save the array of URLs
+          mediaFiles: uploadedFiles,
           latitude: formData.latitude,
           longitude: formData.longitude,
           created_at: new Date(),
-        }]);
-  
+          contactPerson: formData.contactPerson,
+          county: formData.county,
+        },
+      ]);
+
       if (error) throw new Error(error.message);
-  
+
       if (data && data.length > 0) {
         dispatch(addIncident(data[0]));
-        navigate("/notifications");
       }
+      setSuccessMessage("Incident report submitted successfully!");
+      console.log("Incident report submitted successfully!");
+
+      // Reset form data
+      setFormData({
+        type: "",
+        location: "",
+        time: "",
+        summary: "",
+        mediaFiles: [],
+        latitude: "",
+        longitude: "",
+        contactPerson: "",
+        county: "",
+      });
+
+       // Clear file input field
+       if (fileInputRef.current) fileInputRef.current.value = "";
+
+      // Clear the success message after a delay
+      setTimeout(() => setSuccessMessage(""), 3000);
     } catch (error) {
       console.error("Error submitting incident:", error.message);
       alert(`Failed to submit the incident. Error: ${error.message}`);
     }
   };
-  
 
   return (
     <>
-      {/* Header */}
       <header className="text-center p-4">
         <h1 className="text-3xl font-bold text-blue-600">RipotiChapChap</h1>
       </header>
 
-      {/* Main Form Container */}
       <div className="max-w-5xl mx-auto p-4 rounded-lg shadow-lg">
-        <form onSubmit={handleSubmit} className="grid grid-cols-1 gap-6 lg:grid-cols-3">
+         {/* Success Message */}
+         {successMessage && (
+          <p className="mt-4 p-3 text-green-600 bg-green-100 border border-green-200 rounded-lg">
+            {successMessage}
+          </p>
+        )}
+        <form
+          onSubmit={handleSubmit}
+          className="grid grid-cols-1 gap-6 lg:grid-cols-3"
+        >
           <select
             name="type"
             className="w-full p-3 border border-gray-300 rounded-lg"
@@ -131,12 +198,35 @@ function IncidentReportForm() {
             <option value="Accident">Accident</option>
           </select>
 
+          <select
+            name="county"
+            className="w-full p-3 border border-gray-300 rounded-lg"
+            value={formData.county}
+            onChange={handleInputChange}
+          >
+            <option value="">Select County</option>
+            {Object.entries(counties).map(([id, name]) => (
+              <option key={id} value={id}>
+                {name}
+              </option>
+            ))}
+          </select>
+
           <input
             type="text"
             name="location"
             className="w-full p-3 border border-gray-300 rounded-lg"
             placeholder="Location of the incident"
             value={formData.location}
+            onChange={handleInputChange}
+          />
+
+          <input
+            type="text"
+            name="contactPerson"
+            className="w-full p-3 border border-gray-300 rounded-lg"
+            placeholder="Phonenumber..."
+            value={formData.contactPerson}
             onChange={handleInputChange}
           />
 
@@ -162,6 +252,7 @@ function IncidentReportForm() {
             accept="image/*,video/*"
             multiple
             onChange={handleMediaChange}
+            ref={fileInputRef} // Assign ref to the file input
             className="w-full p-3 bg-gray-100 border border-gray-300 rounded-lg"
           />
 
@@ -175,7 +266,8 @@ function IncidentReportForm() {
 
           {formData.latitude && formData.longitude && (
             <p className="lg:col-span-3">
-              <strong>Geolocation:</strong> Latitude {formData.latitude}, Longitude {formData.longitude}
+              <strong>Geolocation:</strong> Latitude {formData.latitude},
+              Longitude {formData.longitude}
             </p>
           )}
 
@@ -186,9 +278,10 @@ function IncidentReportForm() {
             Submit Report
           </button>
         </form>
+
+       
       </div>
 
-      {/* Footer */}
       <footer className="text-center mt-8 p-4 text-gray-500">
         © {new Date().getFullYear()} RipotiChapChap. All rights reserved.
       </footer>

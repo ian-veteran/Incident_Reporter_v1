@@ -12,7 +12,7 @@ const Dashboard = () => {
       {/* Main Content */}
       <main className="flex-grow p-8 bg-gray-100">
         {/* Top Bar */}
-        <div className="flex justify-between items-center mb-8">
+        <div className="flex justify-between items-center mb-8 ">
           <h1 className="text-3xl font-bold">Dashboard Reports</h1>
           <div className="flex items-center space-x-4">
             <span className="text-gray-600">Welcome, Admin</span>
