@@ -7,6 +7,7 @@ import Dashboard from "./ui/Dashboard";
 import IncidentDetails from "./features/responder/IncidentDetails";
 import DashboardCards from "./ui/DashboardCards";
 import LandingPage from "./ui/LandingPage";
+import Stats from "./statistics/Stats";
 
 const router = createBrowserRouter([
   {
@@ -15,17 +16,17 @@ const router = createBrowserRouter([
   },
 
   {
-    path:"/incident_form",
+    path: "/incident_form",
     element: <IncidentReportForm />,
   },
 
   {
     path: "/dashboard",
     element: <Dashboard />,
-    children:[
+    children: [
       {
-        path:"home",
-        element:<DashboardCards />
+        path: "home",
+        element: <DashboardCards />,
       },
       {
         path: "notifications",
@@ -35,7 +36,11 @@ const router = createBrowserRouter([
         path: "incident/:id",
         element: <IncidentDetails />,
       },
-    ]
+      {
+        path: "stats",
+        element: <Stats />,
+      },
+    ],
   },
 ]);
 

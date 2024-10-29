@@ -1,7 +1,7 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice } from "@reduxjs/toolkit";
 
 const incidentSlice = createSlice({
-  name: 'incident',
+  name: "incident",
   initialState: {
     incidents: [], // Store multiple incidents in an array
   },
