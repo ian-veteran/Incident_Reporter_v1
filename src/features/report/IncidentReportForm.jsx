@@ -2,7 +2,6 @@ import React, { useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addIncident, fetchAddress } from "./incidentSlice";
 import supabase from "../../service/supabase";
-import { getAddress } from "../../service/apiGeocoding";
 
 export const counties = {
   1: "Mombasa",

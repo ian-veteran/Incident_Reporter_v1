@@ -26,8 +26,26 @@ function Notifications() {
     };
 
     fetchIncidents(); // Call the fetch function
-    
-    
+
+    // Subscribe to real-time updates
+    const subscription = supabase
+      .channel("incident-updates")
+      .on(
+        "postgres_changes",
+        { event: "*", schema: "public", table: "incidentDetails" },
+        (payload) => {
+          if (payload.eventType === "INSERT") {
+            console.log("New incident received:", payload.new);
+            dispatch(addIncident(payload.new));
+          }
+        }
+      )
+      .subscribe();
+
+    // Cleanup subscription on unmount
+    return () => {
+      supabase.removeChannel(subscription);
+    };
   }, [dispatch]);
   return (
     <>
