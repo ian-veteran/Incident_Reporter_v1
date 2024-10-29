@@ -26,6 +26,8 @@ function Notifications() {
     };
   
     fetchIncidents(); // Call the fetch function
+
+    
   }, [dispatch]);  
   return (
     <>

@@ -1,7 +1,8 @@
 import React, { useRef, useState } from "react";
-import { useDispatch } from "react-redux";
-import { addIncident } from "./incidentSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { addIncident, fetchAddress } from "./incidentSlice";
 import supabase from "../../service/supabase";
+import { getAddress } from "../../service/apiGeocoding";
 
 export const counties = {
   1: "Mombasa",
@@ -65,6 +66,7 @@ function IncidentReportForm() {
     contactPerson: "",
     county: "",
   });
+  const { position,address, status : addressStatus, } = useSelector((state) => state.incident);
   const [successMessage, setSuccessMessage] = useState("");
   const dispatch = useDispatch();
   const fileInputRef = useRef(null); // Add reference for file inp
@@ -82,7 +84,8 @@ function IncidentReportForm() {
     });
   };
 
-  const handleGeolocation = () => {
+  const handleGeolocation = (e) => {
+    e.preventDefault();
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         (position) => {
@@ -97,6 +100,7 @@ function IncidentReportForm() {
           alert("Unable to fetch geolocation.");
         }
       );
+      dispatch(fetchAddress());
     } else {
       alert("Geolocation is not supported by your browser.");
     }
@@ -156,8 +160,8 @@ function IncidentReportForm() {
         county: "",
       });
 
-       // Clear file input field
-       if (fileInputRef.current) fileInputRef.current.value = "";
+      // Clear file input field
+      if (fileInputRef.current) fileInputRef.current.value = "";
 
       // Clear the success message after a delay
       setTimeout(() => setSuccessMessage(""), 3000);
@@ -172,10 +176,11 @@ function IncidentReportForm() {
       <header className="text-center p-4">
         <h1 className="text-3xl font-bold text-blue-600">RipotiChapChap</h1>
       </header>
+      
 
       <div className="max-w-5xl mx-auto p-4 rounded-lg shadow-lg">
-         {/* Success Message */}
-         {successMessage && (
+        {/* Success Message */}
+        {successMessage && (
           <p className="mt-4 p-3 text-green-600 bg-green-100 border border-green-200 rounded-lg">
             {successMessage}
           </p>
@@ -265,10 +270,13 @@ function IncidentReportForm() {
           </button>
 
           {formData.latitude && formData.longitude && (
+            <>
             <p className="lg:col-span-3">
               <strong>Geolocation:</strong> Latitude {formData.latitude},
               Longitude {formData.longitude}
             </p>
+            
+            </>
           )}
 
           <button
@@ -278,8 +286,6 @@ function IncidentReportForm() {
             Submit Report
           </button>
         </form>
-
-       
       </div>
 
       <footer className="text-center mt-8 p-4 text-gray-500">
