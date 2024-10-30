@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import Tag from "./Tag";
 import { useDispatch } from "react-redux";
-import { toggleIncidentStatus } from "../features/report/incidentSlice";
+
 
 const StyledTodayIncident = styled.li`
   display: grid;
@@ -30,7 +30,7 @@ function TodayIncident({ incident }) {
   };
 
   return (
-    <StyledTodayIncident onClick={handleStatusToggle}>
+    <StyledTodayIncident>
       <Guest>{location}</Guest>
       <div>{time}</div>
       {type === "unconfirmed" ? (

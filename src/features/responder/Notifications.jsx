@@ -4,8 +4,9 @@ import { useDispatch, useSelector } from "react-redux";
 import supabase from "../../service/supabase";
 import {
   setIncidents,
-  addIncident,
+  addIncident, selectViewedIncidents,
   selectIncidentCount,
+  markIncidentAsViewed,
 } from "../report/incidentSlice";
 
 function Notifications() {

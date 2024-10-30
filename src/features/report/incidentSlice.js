@@ -38,7 +38,11 @@ const incidentSlice = createSlice({
       state.incidents.unshift(action.payload);
     },
     setIncidents(state, action) {
-      state.incidents = action.payload; // Set multiple incidents from the fetched data
+      state.incidents = action.payload;
+    },
+    markIncidentAsViewed(state, action) {
+      const id = action.payload;
+      state.viewedIncidents[id] = true; // Mark incident as viewed by setting its ID in the object
     },
   },
   extraReducers: (builder) =>
@@ -53,14 +57,17 @@ const incidentSlice = createSlice({
       })
       .addCase(fetchAddress.rejected, (state) => {
         state.status = "error";
-        state.error = "Error fetching address!";
+        state.error =
+          "There was a problem getting your address. Make sure to fill this field!";
       }),
 });
 
+export const selectUnreadCount = (state) => 
+  state.incident.incidents.filter(incident => !state.incident.viewedIncidents[incident.id]).length;
+export const selectViewedIncidents = (state) => state.incident.viewedIncidents;
 export const selectIncidentCount = (state) => state.incident.incidents.length;
 export const selectFloodIncidentCount = (state) =>
-  state.incident.incidents.filter((incident) => incident.type === "Flood")
-    .length;
+  state.incident.incidents.filter((incident) => incident.type === "Flood").length;
 
-export const { addIncident, setIncidents } = incidentSlice.actions;
+export const { addIncident, setIncidents, markIncidentAsViewed } = incidentSlice.actions;
 export default incidentSlice.reducer;
