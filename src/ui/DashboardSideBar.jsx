@@ -12,7 +12,7 @@ function DashboardSideBar() {
 
   return (
     <>
-      <aside className="w-64 bg-blue-400 p-6 sticky top-0 h-screen">
+      <aside className="w-64 bg-red-500 p-6 sticky top-0 h-screen">
         <div className="text-2xl font-bold mb-8">
           <span className="text-gray-100">RipotiChap </span> Chap
         </div>
@@ -31,7 +31,7 @@ function DashboardSideBar() {
             <HiOutlineBell className="mr-2 text-xl" />
             Notifications
             {unreadCount > 0 && (
-              <span className="absolute top-0 right-0 mt-2 ml-8 bg-red-500 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
+              <span className="absolute top-0 right-0 mt-2 ml-8 bg-green-500 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
                 {unreadCount}
               </span>
             )}
