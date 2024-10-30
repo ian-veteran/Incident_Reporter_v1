@@ -31,22 +31,14 @@ const incidentSlice = createSlice({
     position: {},
     address: "",
     error: "",
+    viewedIncidents: {}, // Initialize viewedIncidents as an empty object
   },
   reducers: {
     addIncident(state, action) {
       state.incidents.unshift(action.payload);
     },
     setIncidents(state, action) {
-      state.incidents = action.payload;
-    },
-    toggleIncidentStatus(state, action) {
-      const incident = state.incidents.find(
-        (inc) => inc.id === action.payload.id
-      );
-      if (incident) {
-        incident.type =
-          incident.type === "unconfirmed" ? "confirmed" : "unconfirmed";
-      }
+      state.incidents = action.payload; // Set multiple incidents from the fetched data
     },
   },
   extraReducers: (builder) =>
@@ -65,12 +57,10 @@ const incidentSlice = createSlice({
       }),
 });
 
-// Selectors
 export const selectIncidentCount = (state) => state.incident.incidents.length;
 export const selectFloodIncidentCount = (state) =>
   state.incident.incidents.filter((incident) => incident.type === "Flood")
     .length;
 
-export const { addIncident, setIncidents, toggleIncidentStatus } =
-  incidentSlice.actions;
+export const { addIncident, setIncidents } = incidentSlice.actions;
 export default incidentSlice.reducer;
