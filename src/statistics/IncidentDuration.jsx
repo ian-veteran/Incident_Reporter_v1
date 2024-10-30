@@ -10,11 +10,12 @@ import {
 import styled from "styled-components";
 
 const ChartBox = styled.div`
+  /* Box */
   background-color: var(--color-grey-0);
   border: 1px solid var(--color-grey-100);
   border-radius: var(--border-radius-md);
 
-  padding: 0rem 1.4rem;
+  padding: 0rem 1rem;
   grid-column: 3 / span 2;
 
   & > *:first-child {
@@ -24,6 +25,17 @@ const ChartBox = styled.div`
   & .recharts-pie-label-text {
     font-weight: 600;
   }
+`;
+
+const H1 = styled.h1`
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-top: 0rem;
+  color: green;
+  position: sticky; /* Makes the header sticky */
+  /* Sticks the header to the top of its container */
+  background-color: white; /* Optional: helps with visibility when scrolling */
+  z-index: 1; /* Optional: ensures the header is above other content */
 `;
 
 const startDataLight = [
@@ -142,7 +154,7 @@ function prepareData(startData, stays) {
 function IncidentDuration() {
   return (
     <ChartBox>
-      <h1>Incident Summary Per Day</h1>
+      <H1>Incident Summary Per Day</H1>
 
       <ResponsiveContainer width="100%" height={240}>
         <PieChart>

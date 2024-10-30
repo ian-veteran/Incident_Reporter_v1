@@ -19,6 +19,20 @@ const StyledIncidentChart = styled.div`
   }
 `;
 
+const H1 = styled.h1`
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-top: 0rem;
+  margin-bottom: 1rem; /* Adjust as needed for space below the header */
+  color: indigo;
+  position: sticky; /* Makes the header sticky */
+  top: 0; /* Sticks the header to the top of its container */
+  background-color: white; /* Optional: helps with visibility when scrolling */
+  z-index: 1; /* Optional: ensures the header is above other content */
+  text-align: center; /* Center the text */
+  padding: 1rem 0; /* Optional: add vertical padding for better spacing */
+`;
+
 const fakeData = [
   { label: "Jan 09", totalSales: 480, extrasSales: 20 },
   { label: "Jan 10", totalSales: 580, extrasSales: 100 },
@@ -69,7 +83,7 @@ function IncidentChart() {
 
   return (
     <StyledIncidentChart>
-      <h1>Incident Chart</h1>
+      <H1>Incident Chart</H1>
 
       <ResponsiveContainer height={300} width="100%">
         <AreaChart data={fakeData}>
