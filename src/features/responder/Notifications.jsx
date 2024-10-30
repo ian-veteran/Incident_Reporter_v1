@@ -65,43 +65,47 @@ function Notifications() {
             No incidents reported yet.
           </p>
         ) : (
-          <table className="min-w-full bg-white rounded-lg shadow-md">
-            <thead className=" bg-gray-200 z-5">
-              {" "}
-              <tr className="text-gray-600 uppercase text-sm leading-normal">
-                <th className="py-3 px-6 text-left">Date</th>
-                <th className="py-3 px-6 text-left">Type</th>
-                <th className="py-3 px-6 text-left">Time</th>
-                <th className="py-3 px-6 text-left">Location</th>
-                <th className="py-3 px-6 text-center">Action</th>
-              </tr>
-            </thead>
-
-            <tbody className="text-gray-600 text-sm ticky top-[64px]">
-              {incidents.map((incident) => (
-                <tr
-                  key={incident.id}
-                  className={`border-b border-gray-200 hover:bg-gray-100 ${
-                    viewedIncidents[incident.id] ? "bg-white" : "bg-gray-300"
-                  }`}
-                >
-                  <td className="py-3 px-6 text-left">{incident.created_at}</td>
-                  <td className="py-3 px-6 text-left">{incident.type}</td>
-                  <td className="py-3 px-6 text-left">{incident.time}</td>
-                  <td className="py-3 px-6 text-left">{incident.location}</td>
-                  <td className="py-3 px-6 text-center">
-                    <Link
-                      to={`/dashboard/incident/${incident.id}`}
-                      className="bg-red-500 text-white px-4 py-2 rounded-lg"
-                      onClick={() => handleViewed(incident.id)}
-                    >
-                      Show Details
-                    </Link>
-                  </td>
+          <div style={{ height: "400px", overflowY: "auto" }}>
+            <table className="min-w-full bg-white rounded-lg shadow-md z-5 sticky">
+              <thead className="bg-gray-200 z-5 sticky top-0">
+                {" "}
+                <tr className="text-gray-600 uppercase text-sm leading-normal">
+                  <th className="py-3 px-6 text-left">Date</th>
+                  <th className="py-3 px-6 text-left">Type</th>
+                  <th className="py-3 px-6 text-left">Time</th>
+                  <th className="py-3 px-6 text-left">Location</th>
+                  <th className="py-3 px-6 text-center">Action</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+
+              <tbody className="text-gray-600 text-sm ticky top-[64px]">
+                {incidents.map((incident) => (
+                  <tr
+                    key={incident.id}
+                    className={`border-b border-gray-200 hover:bg-gray-100 ${
+                      viewedIncidents[incident.id] ? "bg-white" : "bg-gray-300"
+                    }`}
+                  >
+                    <td className="py-3 px-6 text-left">
+                      {incident.created_at}
+                    </td>
+                    <td className="py-3 px-6 text-left">{incident.type}</td>
+                    <td className="py-3 px-6 text-left">{incident.time}</td>
+                    <td className="py-3 px-6 text-left">{incident.location}</td>
+                    <td className="py-3 px-6 text-center">
+                      <Link
+                        to={`/dashboard/incident/${incident.id}`}
+                        className="bg-red-500 text-white px-4 py-2 rounded-lg"
+                        onClick={() => handleViewed(incident.id)}
+                      >
+                        Show Details
+                      </Link>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         )}
       </div>
     </>
