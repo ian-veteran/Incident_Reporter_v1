@@ -4,7 +4,8 @@ import { useDispatch, useSelector } from "react-redux";
 import supabase from "../../service/supabase";
 import {
   setIncidents,
-  addIncident, selectViewedIncidents,
+  addIncident,
+  selectViewedIncidents,
   selectIncidentCount,
   markIncidentAsViewed,
 } from "../report/incidentSlice";
@@ -58,15 +59,16 @@ function Notifications() {
   return (
     <>
       <p className="p-3 text-base">Total incidents: {incidentCount}</p>
-      <div className="max-w-6xl mx-auto p-6 bg-gray-100 rounded-lg shadow-lg">
+      <div className="sticky top-0max-w-6xl mx-auto p-6 bg-gray-100 rounded-lg shadow-lg">
         {incidents.length === 0 ? (
           <p className="text-center text-gray-600">
             No incidents reported yet.
           </p>
         ) : (
           <table className="min-w-full bg-white rounded-lg shadow-md">
-            <thead>
-              <tr className="bg-gray-200 text-gray-600 uppercase text-sm leading-normal sticky top-0">
+            <thead className=" bg-gray-200 z-5">
+              {" "}
+              <tr className="text-gray-600 uppercase text-sm leading-normal">
                 <th className="py-3 px-6 text-left">Date</th>
                 <th className="py-3 px-6 text-left">Type</th>
                 <th className="py-3 px-6 text-left">Time</th>
@@ -74,7 +76,8 @@ function Notifications() {
                 <th className="py-3 px-6 text-center">Action</th>
               </tr>
             </thead>
-            <tbody className="text-gray-600 text-sm">
+
+            <tbody className="text-gray-600 text-sm ticky top-[64px]">
               {incidents.map((incident) => (
                 <tr
                   key={incident.id}
@@ -89,7 +92,7 @@ function Notifications() {
                   <td className="py-3 px-6 text-center">
                     <Link
                       to={`/dashboard/incident/${incident.id}`}
-                      className="bg-blue-500 text-white px-4 py-2 rounded-lg"
+                      className="bg-red-500 text-white px-4 py-2 rounded-lg"
                       onClick={() => handleViewed(incident.id)}
                     >
                       Show Details
