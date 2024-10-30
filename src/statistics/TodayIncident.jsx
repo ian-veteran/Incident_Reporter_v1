@@ -27,6 +27,7 @@ function TodayIncident({ incident }) {
     <StyledTodayIncident>
       {type === "unconfirmed" && <Tag type="green">Reported</Tag>}
       {type === "confirmed" && <Tag type="Red">Dispatched</Tag>}
+    <h1>xmxms</h1>
     </StyledTodayIncident>
   );
 }

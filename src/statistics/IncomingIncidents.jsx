@@ -42,7 +42,7 @@ function IncomingIncidents() {
     <StyledToday>
       <h1>Current Reported Incident</h1>
 
-      {!isLoading ? (
+      {/*{!isLoading ? (
         incident?.length > 0 ? (
           <TodayList>
             {incident.map((incident) => (
@@ -54,7 +54,11 @@ function IncomingIncidents() {
         )
       ) : (
         <Spinner />
-      )}
+      )}*/}
+
+    <h1>floods:7</h1>
+
+
     </StyledToday>
   );
 }

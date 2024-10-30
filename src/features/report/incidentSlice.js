@@ -62,6 +62,9 @@ const incidentSlice = createSlice({
 });
 
 export const selectIncidentCount = (state) => state.incident.incidents.length;
+export const selectFloodIncidentCount = (state) =>
+  state.incident.incidents.filter((incident) => incident.type === "Flood").length;
+
 
 export const { addIncident, setIncidents } = incidentSlice.actions;
 export default incidentSlice.reducer;

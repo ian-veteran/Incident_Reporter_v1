@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import supabase from "../../service/supabase";
-import { setIncidents, selectIncidentCount } from "../report/incidentSlice";
+import { setIncidents,addIncident ,selectIncidentCount } from "../report/incidentSlice";
 
 function Notifications() {
   const dispatch = useDispatch();
