@@ -2,7 +2,11 @@ import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import supabase from "../../service/supabase";
-import { setIncidents, addIncident, markIncidentAsViewed, selectIncidentCount, selectViewedIncidents } from "../report/incidentSlice";
+import {
+  setIncidents,
+  addIncident,
+  selectIncidentCount,
+} from "../report/incidentSlice";
 
 function Notifications() {
   const dispatch = useDispatch();
@@ -55,7 +59,9 @@ function Notifications() {
       <p className="p-3 text-base">Total incidents: {incidentCount}</p>
       <div className="max-w-6xl mx-auto p-6 bg-gray-100 rounded-lg shadow-lg">
         {incidents.length === 0 ? (
-          <p className="text-center text-gray-600">No incidents reported yet.</p>
+          <p className="text-center text-gray-600">
+            No incidents reported yet.
+          </p>
         ) : (
           <table className="min-w-full bg-white rounded-lg shadow-md">
             <thead>

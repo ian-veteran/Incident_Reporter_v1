@@ -1,9 +1,8 @@
-import { useQuery } from "@tanstack/react-query";
+import { useSelector } from "react-redux";
 
 export function useTodaysIncident() {
-  const { isLoading, data: incident } = useQuery({
-    queryFn: getTodaysIncident, ///from api of incidentsto be created or alert API to be created
-    queryKey: ["today-incident"],
-  });
-  return { incident, isLoading };
+  const incidents = useSelector((state) => state.incident.incidents);
+  const isLoading = useSelector((state) => state.incident.status === "loading");
+
+  return { incidents, isLoading };
 }
