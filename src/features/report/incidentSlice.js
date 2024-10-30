@@ -10,19 +10,15 @@ function getPosition() {
 export const fetchAddress = createAsyncThunk(
   "incident/fetchAddress",
   async function () {
-    // 1) We get the user's geolocation position
     const positionObj = await getPosition();
     const position = {
       latitude: positionObj.coords.latitude,
       longitude: positionObj.coords.longitude,
     };
 
-    // 2) Then we use a reverse geocoding API to get a description of the user's address, so we can display it the order form, so that the user can correct it if wrong
     const addressObj = await getAddress(position);
     const address = `${addressObj?.locality}, ${addressObj?.city} ${addressObj?.postcode}, ${addressObj?.countryName}`;
 
-    // 3) Then we return an object with the data that we are interested in.
-    // Payload of the FULFILLED state
     return { position, address };
   }
 );
@@ -30,23 +26,28 @@ export const fetchAddress = createAsyncThunk(
 const incidentSlice = createSlice({
   name: "incident",
   initialState: {
-    incidents: [], // Store multiple incidents in an array
+    incidents: [],
     status: "idle",
     position: {},
     address: "",
     error: "",
+    viewedIncidents: {}, // Initialize viewedIncidents as an empty object
   },
   reducers: {
     addIncident(state, action) {
-      state.incidents.unshift(action.payload); // Add a new incident to the array
+      state.incidents.unshift(action.payload);
     },
     setIncidents(state, action) {
-      state.incidents = action.payload; // Set multiple incidents from the fetched data
+      state.incidents = action.payload;
+    },
+    markIncidentAsViewed(state, action) {
+      const id = action.payload;
+      state.viewedIncidents[id] = true; // Mark incident as viewed by setting its ID in the object
     },
   },
   extraReducers: (builder) =>
     builder
-      .addCase(fetchAddress.pending, (state, action) => {
+      .addCase(fetchAddress.pending, (state) => {
         state.status = "loading";
       })
       .addCase(fetchAddress.fulfilled, (state, action) => {
@@ -54,17 +55,22 @@ const incidentSlice = createSlice({
         state.address = action.payload.address;
         state.status = "idle";
       })
-      .addCase(fetchAddress.rejected, (state, action) => {
+      .addCase(fetchAddress.rejected, (state) => {
         state.status = "error";
         state.error =
           "There was a problem getting your address. Make sure to fill this field!";
       }),
 });
 
+
+
+export const selectUnreadCount = (state) => 
+  state.incident.incidents.filter(incident => !state.incident.viewedIncidents[incident.id]).length;
+  
+export const selectViewedIncidents = (state) => state.incident.viewedIncidents;
 export const selectIncidentCount = (state) => state.incident.incidents.length;
 export const selectFloodIncidentCount = (state) =>
   state.incident.incidents.filter((incident) => incident.type === "Flood").length;
 
-
-export const { addIncident, setIncidents } = incidentSlice.actions;
+export const { addIncident, setIncidents, markIncidentAsViewed } = incidentSlice.actions;
 export default incidentSlice.reducer;
