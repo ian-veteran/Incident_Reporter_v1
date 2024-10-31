@@ -1,27 +1,18 @@
-import { data } from "autoprefixer";
-import {
-  Cell,
-  Legend,
-  Pie,
-  PieChart,
-  ResponsiveContainer,
-  Tooltip,
-} from "recharts";
+import React from "react";
+import { useSelector } from "react-redux";
+import { Cell, Legend, Pie, PieChart, ResponsiveContainer, Tooltip } from "recharts";
 import styled from "styled-components";
 
+// Styled components
 const ChartBox = styled.div`
-  /* Box */
   background-color: var(--color-grey-0);
   border: 1px solid var(--color-grey-100);
   border-radius: var(--border-radius-md);
-
   padding: 0rem 1rem;
   grid-column: 3 / span 2;
-
   & > *:first-child {
     margin-bottom: 1.6rem;
   }
-
   & .recharts-pie-label-text {
     font-weight: 600;
   }
@@ -32,134 +23,46 @@ const H1 = styled.h1`
   font-weight: 600;
   margin-top: 0rem;
   color: green;
-  position: sticky; /* Makes the header sticky */
-  /* Sticks the header to the top of its container */
-  background-color: white; /* Optional: helps with visibility when scrolling */
-  z-index: 1; /* Optional: ensures the header is above other content */
+  position: sticky;
+  background-color: white;
+  z-index: 1;
 `;
 
-const startDataLight = [
-  {
-    duration: "Accident",
-    value: 0,
-    color: "#ef4444",
-  },
-  {
-    duration: "Flood",
-    value: 9,
-    color: "#f97316",
-  },
-  {
-    duration: "Earthquake",
-    value: 4,
-    color: "#eab308",
-  },
-  {
-    duration: "Robbery",
-    value: 6,
-    color: "#84cc16",
-  },
-  {
-    duration: "Landslides",
-    value: 8,
-    color: "#22c55e",
-  },
-  {
-    duration: "Drought",
-    value: 0,
-    color: "#14b8a6",
-  },
-  {
-    duration: "Pandemic",
-    value: 9,
-    color: "#3b82f6",
-  },
-  {
-    duration: "Explosion",
-    value: 6,
-    color: "#a855f7",
-  },
-];
-
-const startDataDark = [
-  {
-    duration: "1 night",
-    value: 0,
-    color: "#b91c1c",
-  },
-  {
-    duration: "2 nights",
-    value: 0,
-    color: "#c2410c",
-  },
-  {
-    duration: "3 nights",
-    value: 0,
-    color: "#a16207",
-  },
-  {
-    duration: "4-5 nights",
-    value: 0,
-    color: "#4d7c0f",
-  },
-  {
-    duration: "6-7 nights",
-    value: 0,
-    color: "#15803d",
-  },
-  {
-    duration: "8-14 nights",
-    value: 0,
-    color: "#0f766e",
-  },
-  {
-    duration: "15-21 nights",
-    value: 0,
-    color: "#1d4ed8",
-  },
-  {
-    duration: "21+ nights",
-    value: 0,
-    color: "#7e22ce",
-  },
-];
-
-function prepareData(startData, stays) {
-  // A bit ugly code, but sometimes this is what it takes when working with real data 😅
-
-  function incArrayValue(arr, field) {
-    return arr.map((obj) =>
-      obj.duration === field ? { ...obj, value: obj.value + 1 } : obj
-    );
-  }
-
-  const data = stays
-    .reduce((arr, cur) => {
-      const num = cur.numNights;
-      if (num === 1) return incArrayValue(arr, "1 night");
-      if (num === 2) return incArrayValue(arr, "2 nights");
-      if (num === 3) return incArrayValue(arr, "3 nights");
-      if ([4, 5].includes(num)) return incArrayValue(arr, "4-5 nights");
-      if ([6, 7].includes(num)) return incArrayValue(arr, "6-7 nights");
-      if (num >= 8 && num <= 14) return incArrayValue(arr, "8-14 nights");
-      if (num >= 15 && num <= 21) return incArrayValue(arr, "15-21 nights");
-      if (num >= 21) return incArrayValue(arr, "21+ nights");
-      return arr;
-    }, startData)
-    .filter((obj) => obj.value > 0);
-
-  return data;
-}
+// Define colors for each type
+const colors = {
+  Accident: "#ef4444",
+  Flood: "#f97316",
+  Earthquake: "#eab308",
+  Robbery: "#84cc16",
+  Landslides: "#22c55e",
+  Drought: "#14b8a6",
+  Pandemic: "#3b82f6",
+  Explosion: "#a855f7",
+};
 
 function IncidentDuration() {
+  // Get incident data from Redux
+  const incidents = useSelector((state) => state.incident.incidents);
+
+  // Summarize data for the chart
+  const startData = Object.entries(
+    incidents.reduce((acc, incident) => {
+      acc[incident.type] = (acc[incident.type] || 0) + 1;
+      return acc;
+    }, {})
+  ).map(([type, value]) => ({
+    duration: type,
+    value,
+    color: colors[type] || "#ccc", // Default to grey if no color is found
+  }));
+
   return (
     <ChartBox>
-      <H1>Incident Summary Per Day</H1>
-
+      <H1>Incident Summary Per Type</H1>
       <ResponsiveContainer width="100%" height={240}>
         <PieChart>
           <Pie
-            data={startDataLight}
+            data={startData}
             nameKey="duration"
             dataKey="value"
             innerRadius={80}
@@ -168,11 +71,11 @@ function IncidentDuration() {
             cy="50%"
             paddingAngle={3}
           >
-            {startDataLight.map((entry) => (
+            {startData.map((entry) => (
               <Cell
+                key={entry.duration}
                 fill={entry.color}
                 stroke={entry.color}
-                key={entry.duration}
               />
             ))}
           </Pie>
@@ -181,7 +84,7 @@ function IncidentDuration() {
             verticalAlign="middle"
             align="right"
             width="25%"
-            layout="verticle"
+            layout="vertical"
             iconSize={12}
             iconType="circle"
           />

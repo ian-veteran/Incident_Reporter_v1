@@ -62,6 +62,17 @@ const incidentSlice = createSlice({
       }),
 });
 
+// Selector to count incidents by type
+export const selectIncidentSummary = (state) =>
+  state.incident.incidents.reduce((summary, incident) => {
+    const { type } = incident;
+    if (summary[type]) {
+      summary[type] += 1;
+    } else {
+      summary[type] = 1;
+    }
+    return summary;
+  }, {});
 export const selectUnreadCount = (state) => 
   state.incident.incidents.filter(incident => !state.incident.viewedIncidents[incident.id]).length;
 export const selectViewedIncidents = (state) => state.incident.viewedIncidents;
