@@ -1,6 +1,13 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { Cell, Legend, Pie, PieChart, ResponsiveContainer, Tooltip } from "recharts";
+import {
+  Cell,
+  Legend,
+  Pie,
+  PieChart,
+  ResponsiveContainer,
+  Tooltip,
+} from "recharts";
 import styled from "styled-components";
 
 // Styled components
@@ -34,10 +41,11 @@ const colors = {
   Flood: "#f97316",
   Earthquake: "#eab308",
   Robbery: "#84cc16",
-  Landslides: "#22c55e",
+  Landslides: "#293d24",
   Drought: "#14b8a6",
   Pandemic: "#3b82f6",
-  Explosion: "#a855f7",
+  Fire: "#a855f7",
+  Other: "#ee09ee",
 };
 
 function IncidentDuration() {
@@ -69,7 +77,7 @@ function IncidentDuration() {
             outerRadius={120}
             cx="40%"
             cy="50%"
-            paddingAngle={3}
+            paddingAngle={2}
           >
             {startData.map((entry) => (
               <Cell
