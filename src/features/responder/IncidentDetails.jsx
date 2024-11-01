@@ -26,7 +26,7 @@ function IncidentDetails() {
     <div className="max-w-4xl mx-auto p-6 bg-gray-100 rounded-lg shadow-lg">
       <button
         onClick={() => navigate(-1)}
-        className="flex items-center mb-4 text-blue-500 hover:text-blue-700"
+        className="flex items-center mb-4 text-red-500 hover:text-red-700"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -45,7 +45,9 @@ function IncidentDetails() {
         Back to Notifications
       </button>
 
-      <h2 className="text-2xl font-bold mb-6 text-center">Incident Details</h2>
+      <h2 className="text-2xl font-bold mb-6 text-center uppercase">
+        Incident Details
+      </h2>
 
       <div className="bg-white p-4 rounded-lg shadow-md">
         <div className="grid grid-cols-3 gap-8">
@@ -89,7 +91,9 @@ function IncidentDetails() {
         {/* Map Display */}
         {incident.latitude && incident.longitude && (
           <div className="mt-6">
-            <h3 className="text-lg font-bold mb-4">Incident Location on Map</h3>
+            <h3 className="text-lg font-bold mb-4 uppercase">
+              Incident Location on Map
+            </h3>
             <MapContainer
               center={[incident.latitude, incident.longitude]}
               zoom={13}

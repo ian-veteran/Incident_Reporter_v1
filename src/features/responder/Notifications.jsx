@@ -66,8 +66,7 @@ function Notifications() {
           </p>
         ) : (
           <table className="min-w-full bg-white rounded-lg shadow-md">
-            <thead className=" bg-gray-200 z-5">
-              {" "}
+            <thead className="bg-gray-200 z-5">
               <tr className="text-gray-600 uppercase text-sm leading-normal">
                 <th className="py-3 px-6 text-left">Date</th>
                 <th className="py-3 px-6 text-left">Type</th>
