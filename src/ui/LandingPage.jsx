@@ -13,7 +13,7 @@ function LandingPage() {
       <div className="flex flex-col md:flex-row justify-between h-full w-full">
         {/* Left side - Details */}
         <div className="w-full md:w-1/2 h-full flex flex-col justify-center items-center text-center p-4 bg-white">
-          <h2 className="text-4xl font-bold mb-4">
+          <h2 className="text-4xl font-bold mb-4 border-b-2 border-slate-950 p-2">
             <span className="text-red-500">RipotiChap</span> Chap
           </h2>
           <p className="text-lg mb-6 animate-slideIn font-sans leading-relaxed text-gray-800 transition duration-500 ease-in-out transform hover:scale-105">
