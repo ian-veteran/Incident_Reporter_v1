@@ -2,7 +2,6 @@ import React from "react";
 import { Link, Navigate, Outlet } from "react-router-dom";
 import DashboardCards from "./DashboardCards";
 import DashboardSideBar from "./DashboardSideBar";
-import Logout from "../authentication/Logout";
 
 const Dashboard = () => {
   return (
@@ -30,9 +29,6 @@ const Dashboard = () => {
               />
             </div>
             {/*logout icon placed */}
-            <div>
-              <Logout />
-            </div>
           </div>
           {/* Overview and Sales Chart */}
           <div>

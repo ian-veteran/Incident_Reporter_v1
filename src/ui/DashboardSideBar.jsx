@@ -6,6 +6,8 @@ import {
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux"; // Import useSelector for accessing Redux state
 import { selectUnreadCount } from "../features/report/incidentSlice"; // Adjust the path to your slice
+import { HiOutlineUser } from "react-icons/hi2";
+import Logout from "../authentication/Logout";
 
 function DashboardSideBar() {
   const unreadCount = useSelector(selectUnreadCount); // Get unread count from Redux
@@ -43,7 +45,18 @@ function DashboardSideBar() {
             <HiOutlineChartBar className="mr-2 text-xl" />
             Statistics
           </Link>
+
+          <Link
+            className="flex items-center text-white font-semibold hover:text-slate-950 transition-colors"
+            to="/dashboard/signupform"
+          >
+            <HiOutlineUser className="mr-2 text-xl" />
+            Add Users
+          </Link>
         </nav>
+        <div className="margin-auto-top">
+          <Logout />
+        </div>
       </aside>
     </>
   );

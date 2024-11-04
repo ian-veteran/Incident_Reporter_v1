@@ -1,11 +1,30 @@
-import { useForm } from "react-router-dom";
-import Form from "./Form";
+import { useForm } from "react-hook-form";
+import styled from "styled-components";
+
 import FormRow from "./FormRow";
 import Input from "./Input";
-import LoginForm from "./LoginForm";
 import { useSignup } from "./useSignup";
-
+import Button from "./Button";
 // Email regex: /\S+@\S+\.\S+/
+
+const StyledForm = styled.form`
+  display: flex;
+  flex-direction: column;
+  gap: 1.6rem;
+  width: 100%; /* Full width for alignment */
+  max-width: 400px; /* Restrict max-width for a narrow form */
+  margin-left: 2rem; /* Align form to the left with some spacing */
+  padding: 2rem;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+
+  @media (max-width: 600px) {
+    padding: 1.5rem;
+    gap: 1.2rem;
+    margin-left: 1rem; /* Adjust margin for smaller screens */
+  }
+`;
 
 function SignupForm() {
   const { signup, isLoading } = useSignup();
@@ -17,7 +36,7 @@ function SignupForm() {
   }
 
   return (
-    <Form onSubmit={handleSubmit(onSubmit)}>
+    <StyledForm onSubmit={handleSubmit(onSubmit)}>
       <FormRow label="Full name" error={errors?.fullName?.message}>
         <Input
           type="text"
@@ -75,17 +94,10 @@ function SignupForm() {
 
       <FormRow>
         {/* type is an HTML attribute! */}
-        <Button variation="secondary" type="reset" disabled={isLoading}>
-          Cancel
-        </Button>
+        <Button disabled={isLoading}>Cancel</Button>
         <Button disabled={isLoading}>Create new user</Button>
-
-        {/* to redirect to login page if already have ana account*/}
-        <Button disabled={isLoading}>
-          Already have an account <LoginForm />
-        </Button>
       </FormRow>
-    </Form>
+    </StyledForm>
   );
 }
 
