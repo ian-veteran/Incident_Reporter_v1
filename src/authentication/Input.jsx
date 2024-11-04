@@ -1,24 +1,23 @@
 import styled from "styled-components";
 
 const Input = styled.input`
-  border: 1px solid grey;
-  background-color: slate;
-  border-radius: 8px;
-  padding: 1rem 1.5rem;
-  box-shadow: red;
+  padding: 0;
   font-size: 1rem;
-  color: black;
-  transition: all 0.3s ease;
+  font-weight: 400;
+  border: 1px solid black;
+  border-radius: 6px;
+  color: slate-200;
+  background-color: slate-100;
+  transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
 
   &:hover {
-    box-shadow: red;
+    border-color: red;
   }
 
   &:focus {
     outline: none;
-    border-color: slate;
-    box-shadow: 0 0 0 3px rgba(100, 150, 255, 0.2);
-    background-color: grey;
+    border-color: green;
+    box-shadow: 0 0 0 2px rgba(100, 150, 255, 0.3);
   }
 `;
 

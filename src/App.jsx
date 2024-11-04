@@ -11,6 +11,7 @@ import LandingPage from "./ui/LandingPage";
 import Stats from "./statistics/Stats";
 import ProtectedRoute from "./ui/ProtectedRoute";
 import Login from "./authentication/Login";
+import SignupForm from "./authentication/SignupForm";
 
 const queryClient = new QueryClient();
 const router = createBrowserRouter([
@@ -52,6 +53,10 @@ const router = createBrowserRouter([
       {
         path: "stats",
         element: <Stats />,
+      },
+      {
+        path: "signupform",
+        element: <SignupForm />,
       },
     ],
   },

@@ -1,17 +1,27 @@
 import supabase from "./supabase";
 
 export async function signup({ fullName, email, password }) {
-  const { data, error } = await supabase.auth.signup({
-    email,
-    password,
-    options: {
-      fullName,
-    },
-  });
+  if (!email || !password) {
+    throw new Error("Email and password are required.");
+  }
 
-  if (error) throw new Error(error.message);
+  try {
+    const { data, error } = await supabase.auth.signUp({
+      email,
+      password,
+      // options: {
+      //   data: { fullName },
+      // },
+    });
 
-  return data;
+    if (error) {
+      throw new Error(error.message);
+    }
+
+    return data;
+  } catch (err) {
+    throw new Error("Signup failed. Please try again.");
+  }
 }
 
 export async function login({ email, password }) {

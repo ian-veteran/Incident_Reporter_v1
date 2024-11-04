@@ -57,8 +57,8 @@ const H1 = styled.h1`
 `;
 
 function LoginForm() {
-  const [email, setEmail] = useState();
-  const [password, setPassword] = useState();
+  const [email, setEmail] = useState("admin@admin.com");
+  const [password, setPassword] = useState("Admin");
 
   const { login, isLoading } = useLogin();
 
