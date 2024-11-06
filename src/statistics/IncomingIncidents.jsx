@@ -1,8 +1,6 @@
 import styled from "styled-components";
-import { useTodaysIncident } from "./useTodaysIncident";
-import Spinner from "../ui/Spinner";
-import TodayIncident from "./TodayIncident";
-//import { selectIncidentCount } from "./src/features/report/incidentSlice.js";
+import { useSelector } from "react-redux";
+import { selectIncidentCount } from "../features/report/incidentSlice";
 
 const StyledToday = styled.div`
   background-color: var(--color-grey-0);
@@ -16,23 +14,6 @@ const StyledToday = styled.div`
   padding-top: 1rem;
 `;
 
-const TodayList = styled.ul`
-  overflow: scroll;
-  overflow-x: hidden;
-  &::-webkit-scrollbar {
-    width: 0 !important;
-  }
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-`;
-
-const NoActivity = styled.p`
-  text-align: center;
-  font-size: 1.8rem;
-  font-weight: 500;
-  margin-top: 0.8rem;
-`;
-
 const H1 = styled.h1`
   font-size: 1.2rem;
   font-weight: 600;
@@ -41,42 +22,34 @@ const H1 = styled.h1`
   position: sticky;
   top: 0;
   z-index: 1;
+  font-family: "Times New Roman", Times, serif;
+`;
+
+const H2 = styled.h2`
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: #333;
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+`;
+
+const P1 = styled.p`
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: #ff4500; /* Bright color for emphasis */
+  margin: 0.5rem 0 1rem;
+  text-align: center;
 `;
 
 function IncomingIncidents() {
-  const { incidents, isLoading } = useTodaysIncident();
-
-  const unconfirmedIncidents = incidents.filter(
-    (incident) => incident.type === "unconfirmed"
-  );
-  const confirmedIncidents = incidents.filter(
-    (incident) => incident.type === "confirmed"
-  );
+  const totalIncidents = useSelector(selectIncidentCount);
 
   return (
     <StyledToday>
       <H1>Current Reported Incidents</H1>
-      {isLoading ? (
-        <Spinner />
-      ) : incidents.length > 0 ? (
-        <>
-          <h2>Unconfirmed Incidents</h2>
-          <TodayList>
-            {unconfirmedIncidents.map((incident) => (
-              <TodayIncident incident={incident} key={incident.id} />
-            ))}
-          </TodayList>
 
-          <h2>Confirmed Incidents</h2>
-          <TodayList>
-            {confirmedIncidents.map((incident) => (
-              <TodayIncident incident={incident} key={incident.id} />
-            ))}
-          </TodayList>
-        </>
-      ) : (
-        <NoActivity>No Incidents Today...</NoActivity>
-      )}
+      <H2>Confirmed Incidents</H2>
+      <P1>Total Incidents: {totalIncidents}</P1>
     </StyledToday>
   );
 }

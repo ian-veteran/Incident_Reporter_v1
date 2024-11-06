@@ -30,6 +30,7 @@ const H1 = styled.h1`
   background-color: white; /* Optional: helps with visibility when scrolling */
   z-index: 1; /* Optional: ensures the header is above other content */
   text-align: center; /* Center the text */
+  font-family: "Times New Roman", Times, serif;
   padding: 1rem 0; /* Optional: add vertical padding for better spacing */
 `;
 
