@@ -73,12 +73,16 @@ export const selectIncidentSummary = (state) =>
     }
     return summary;
   }, {});
-export const selectUnreadCount = (state) => 
-  state.incident.incidents.filter(incident => !state.incident.viewedIncidents[incident.id]).length;
+export const selectUnreadCount = (state) =>
+  state.incident.incidents.filter(
+    (incident) => !state.incident.viewedIncidents[incident.id]
+  ).length;
 export const selectViewedIncidents = (state) => state.incident.viewedIncidents;
 export const selectIncidentCount = (state) => state.incident.incidents.length;
 export const selectFloodIncidentCount = (state) =>
-  state.incident.incidents.filter((incident) => incident.type === "Flood").length;
+  state.incident.incidents.filter((incident) => incident.type === "Flood")
+    .length;
 
-export const { addIncident, setIncidents, markIncidentAsViewed } = incidentSlice.actions;
+export const { addIncident, setIncidents, markIncidentAsViewed } =
+  incidentSlice.actions;
 export default incidentSlice.reducer;

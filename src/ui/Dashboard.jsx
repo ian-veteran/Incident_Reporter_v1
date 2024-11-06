@@ -1,6 +1,4 @@
-import React from "react";
-import { Link, Navigate, Outlet } from "react-router-dom";
-import DashboardCards from "./DashboardCards";
+import { Outlet } from "react-router-dom";
 import DashboardSideBar from "./DashboardSideBar";
 
 const Dashboard = () => {

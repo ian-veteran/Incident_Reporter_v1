@@ -14,27 +14,36 @@ const StyledContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: 20px;
-  max-width: 1200px; /* Limit the width for better readability */
-  width: 100%;
+  margin: 10px;
+  width: 100%; // Full viewport width
+  overflow: auto;
 `;
 
 // Styled component for the Stats container
 const StatsContainer = styled.div`
   display: flex;
-  gap: 16px; /* Space between the Stat components */
-  flex-wrap: wrap; /* Allow wrapping if there's not enough space */
-  justify-content: center; /* Center align the Stats */
-  margin-bottom: 20px; /* Space below the Stats */
+  gap: 16px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-bottom: 10px;
+  width: 100%;
+
+  @media (min-width: 768px) {
+    justify-content: space-around;
+  }
 `;
 
 const RowContainer = styled.div`
-  display: grid; /* Use grid layout */
-  grid-template-columns: 1fr 1fr; /* Two equal columns */
-  gap: 10px; /* Space between the columns */
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
   width: 100%;
-  height: 50%; /* Maintain the height */
-  margin: 10px 0; /* Space above and below */
+  height: 50%;
+  margin: 10px 0;
+
+  @media (min-width: 768px) {
+    grid-template-columns: 1fr 1fr;
+  }
 `;
 
 // Common styles for information components
