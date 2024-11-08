@@ -77,7 +77,7 @@ const colors = {
   Flood: "#f97316",
   Earthquake: "#eab308",
   Robbery: "#84cc16",
-  Landslides: "#293d24",
+  Landslide: "#293d24",
   Drought: "#14b8a6",
   Pandemic: "#3b82f6",
   Fire: "#a855f7",

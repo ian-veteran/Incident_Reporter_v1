@@ -85,4 +85,41 @@ export const selectFloodIncidentCount = (state) =>
 
 export const { addIncident, setIncidents, markIncidentAsViewed } =
   incidentSlice.actions;
+
+// selectIncidentSummaryByDate Selector
+export const selectIncidentSummaryByDate = (state) => {
+  const summary = {};
+
+  // Loop through all incidents and group them by date and type
+  state.incident.incidents.filter(({ date, type }) => {
+    if (!summary[date]) {
+      summary[date] = {
+        date,
+        flood: 0,
+        earthquake: 0,
+        robbery: 0,
+        landslide: 0,
+        drought: 0,
+        pandemic: 0,
+        fire: 0,
+        other: 0,
+      };
+    }
+    // Increment the corresponding incident type count
+    if (type === "Flood") summary[date].flood += 1;
+    else if (type === "Earthquake") summary[date].earthquake += 1;
+    else if (type === "Robbery") summary[date].robbery += 1;
+    else if (type === "Landslide") summary[date].landslide += 1;
+    else if (type === "Drought") summary[date].drought += 1;
+    else if (type === "Pandemic") summary[date].pandemic += 1;
+    else if (type === "Fire") summary[date].fire += 1;
+    else summary[date].other += 1;
+  });
+
+  // Convert summary object to array for chart consumption
+  return Object.values(summary).sort(
+    (a, b) => new Date(a.date) - new Date(b.date)
+  ); // Sort by date
+};
+
 export default incidentSlice.reducer;
