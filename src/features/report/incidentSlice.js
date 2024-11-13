@@ -96,6 +96,7 @@ export const selectIncidentSummaryByDate = (state) => {
       summary[date] = {
         date,
         flood: 0,
+        accident: 0,
         earthquake: 0,
         robbery: 0,
         landslide: 0,
@@ -107,6 +108,7 @@ export const selectIncidentSummaryByDate = (state) => {
     }
     // Increment the corresponding incident type count
     if (type === "Flood") summary[date].flood += 1;
+    else if (type === "Accident") summary[date].accident += 1;
     else if (type === "Earthquake") summary[date].earthquake += 1;
     else if (type === "Robbery") summary[date].robbery += 1;
     else if (type === "Landslide") summary[date].landslide += 1;
